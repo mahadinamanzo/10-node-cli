@@ -9,6 +9,14 @@ export function parseArgs(argv) {
     }
 
     const name = token.slice(2);
+    if (name === "no-color") {
+      if (Object.hasOwn(options, name)) {
+        throw new Error(`Option --${name} was provided more than once`);
+      }
+      options[name] = true;
+      continue;
+    }
+
     const value = args[index + 1];
     if (value === undefined || value.startsWith("--")) {
       throw new Error(`Missing value for --${name}`);
